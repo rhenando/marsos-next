@@ -135,17 +135,19 @@ const Footer = () => {
         </div>
 
         {/* App Store + Socials */}
-        <div className='mt-10 flex flex-col md:flex-row justify-between items-center border-t pt-6'>
+        {/* <div className='mt-10 flex flex-col md:flex-row justify-between items-center border-t pt-6'>
           <div className='flex gap-4 mb-4 md:mb-0'>
-            <img
+            <Image
               src='https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg'
               alt='App Store'
-              className='h-10'
+              width={150}
+              height={50}
             />
-            <img
+            <Image
               src='https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg'
               alt='Google Play'
-              className='h-10'
+              width={150}
+              height={50}
             />
           </div>
 
@@ -157,10 +159,10 @@ const Footer = () => {
             <Facebook size={18} />
             <Youtube size={18} />
           </div>
-        </div>
+        </div> */}
 
         {/* Bottom Text */}
-        <div className='text-center text-xs text-gray-300 mt-4'>
+        <div className='text-center text-xs text-gray-300 mt-10'>
           &copy; 2025 Marsos Technologies. All rights reserved. | Privacy Policy
         </div>
       </div>

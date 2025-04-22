@@ -29,6 +29,7 @@ import {
   ShoppingCart,
   MapPin,
 } from "react-feather";
+import Image from "next/image";
 
 const Header = forwardRef((props, ref) => {
   const { cartItemCount, userRole } = useCart();
@@ -81,9 +82,11 @@ const Header = forwardRef((props, ref) => {
       <div ref={desktopHeaderRef} className='hidden lg:block'>
         <div className='flex items-center justify-between px-6 py-3'>
           <Link href='/'>
-            <img
+            <Image
               src='/logo.png'
               alt='Logo'
+              width={120} // ✅ REQUIRED
+              height={60} // ✅ REQUIRED
               className='h-20 w-auto object-contain'
             />
           </Link>

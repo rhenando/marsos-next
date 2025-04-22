@@ -121,7 +121,7 @@ function MobileHeroSection() {
         <button onClick={() => setShowRFQModal(true)}>
           <div className='flex flex-col items-center'>
             <MousePointer size={24} />
-            <span>Buyer's Choice</span>
+            <span>Buyer&apos;s Choice</span>
           </div>
         </button>
         <button onClick={() => router.push("/secured")}>
