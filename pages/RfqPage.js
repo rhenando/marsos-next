@@ -1,4 +1,5 @@
 "use client";
+export const dynamic = "force-dynamic"; // Prevents SSR crash on Vercel
 
 import React, { useState, useEffect, useMemo } from "react";
 import CreatableSelect from "react-select/creatable";
@@ -20,7 +21,8 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { showSuccess, showError, showWarning } from "../utils/toastUtils";
 
 const RfqModal = ({ show, onClose }) => {
-  const { currentUser } = useAuth();
+  const auth = useAuth(); // Safe call
+  const currentUser = auth?.currentUser;
   const router = useRouter();
 
   const [categories, setCategories] = useState([]);
@@ -88,7 +90,7 @@ const RfqModal = ({ show, onClose }) => {
 
   const handleFileChange = async (e) => {
     const selectedFile = e.target.files[0];
-    if (!selectedFile) return;
+    if (!selectedFile || !currentUser) return;
 
     setUploading(true);
     setFile(selectedFile);
@@ -253,7 +255,7 @@ const RfqModal = ({ show, onClose }) => {
             </div>
             <div>
               <label className='font-medium'>Product Subcategory *</label>
-              <Select
+              <CreatableSelect
                 options={subcategoryOptions}
                 value={selectedSubcategory}
                 onChange={setSelectedSubcategory}
