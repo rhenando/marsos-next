@@ -1,4 +1,3 @@
-// File: src/context/AuthContext.js
 "use client";
 
 import React, { createContext, useContext, useState, useEffect } from "react";
@@ -22,33 +21,36 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     async function setUserAndRole(user) {
       setCurrentUser(user);
+
       if (user) {
-        // fetch custom data & token
-        const idToken = await user.getIdToken();
-        setToken(idToken);
+        try {
+          const idToken = await user.getIdToken();
+          setToken(idToken);
 
-        const snap = await getDoc(doc(db, "users", user.uid));
-        if (snap.exists()) {
-          const data = snap.data();
-          setUserData(data);
-          setRole(data.role);
-        } else {
-          console.warn("No user doc found. Defaulting to guest.");
-          setUserData({ role: "guest" });
-          setRole("guest");
-        }
+          const snap = await getDoc(doc(db, "users", user.uid));
+          if (snap.exists()) {
+            const data = snap.data();
+            setUserData(data);
+            setRole(data.role);
+          } else {
+            console.warn("No user doc found. Defaulting to guest.");
+            setUserData({ role: "guest" });
+            setRole("guest");
+          }
 
-        // redirect if needed
-        if (intendedRoute) {
-          router.push(intendedRoute);
-          setIntendedRoute(null);
+          if (intendedRoute) {
+            router.push(intendedRoute);
+            setIntendedRoute(null);
+          }
+        } catch (err) {
+          console.error("Error fetching user data:", err);
         }
       } else {
-        // fully logged out
         setUserData(null);
         setRole(null);
         setToken(null);
       }
+
       setLoading(false);
     }
 
@@ -56,6 +58,7 @@ export function AuthProvider({ children }) {
       setLoading(true);
       setUserAndRole(user);
     });
+
     const unsubToken = onIdTokenChanged(auth, async (user) => {
       if (user) {
         const refreshed = await user.getIdToken(true);
@@ -63,7 +66,6 @@ export function AuthProvider({ children }) {
       }
     });
 
-    // cross‑tab logout sync
     const onStorage = (e) => {
       if (e.key === "logout") {
         signOut(auth).then(() => {
@@ -74,6 +76,7 @@ export function AuthProvider({ children }) {
         });
       }
     };
+
     window.addEventListener("storage", onStorage);
 
     return () => {
@@ -84,6 +87,16 @@ export function AuthProvider({ children }) {
   }, [intendedRoute, router]);
 
   const logout = async () => {
+    // ✅ Clear stale reCAPTCHA verifier to prevent second-login errors
+    if (typeof window !== "undefined" && window.recaptchaVerifier) {
+      try {
+        window.recaptchaVerifier.clear();
+        delete window.recaptchaVerifier;
+      } catch (error) {
+        console.warn("Error clearing recaptchaVerifier:", error);
+      }
+    }
+
     await signOut(auth);
     localStorage.setItem("logout", Date.now());
     setCurrentUser(null);
@@ -113,7 +126,7 @@ export function AuthProvider({ children }) {
 }
 
 //=============================================================================
-// Usage: wrap any page or layout that should be protected...
+// ProtectedRoute wrapper to restrict access based on auth status
 export function ProtectedRoute({ children, requiredRole }) {
   const router = useRouter();
   const { currentUser, loading, hasRole, setIntendedRoute } = useAuth();
@@ -132,5 +145,6 @@ export function ProtectedRoute({ children, requiredRole }) {
   if (loading || !currentUser) {
     return <div className='p-10 text-center'>Checking authentication…</div>;
   }
+
   return children;
 }

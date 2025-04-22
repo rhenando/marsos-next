@@ -315,6 +315,7 @@ marsos-next
 │   │       │   │   ├── page.7914eec1b5a166de.hot-update.js
 │   │       │   │   ├── page.7c3a6aa7cd914204.hot-update.js
 │   │       │   │   ├── page.8116857b87602def.hot-update.js
+│   │       │   │   ├── page.81c2b565abc442cd.hot-update.js
 │   │       │   │   ├── page.828262b77b3e033e.hot-update.js
 │   │       │   │   ├── page.82e892499480bc96.hot-update.js
 │   │       │   │   ├── page.83b77e85be5e0943.hot-update.js
@@ -359,6 +360,8 @@ marsos-next
 │   │       │   │   ├── page.fdb143ae1e2090d3.hot-update.js
 │   │       │   │   ├── page.ff4c3c9392346ea1.hot-update.js
 │   │       │   │   └── page.ff6d0a5a38ca51f7.hot-update.js
+│   │       │   ├── supplier-dashboard
+│   │       │   │   └── page.81c2b565abc442cd.hot-update.js
 │   │       │   ├── user-login
 │   │       │   │   ├── page.0817e7551e08f694.hot-update.js
 │   │       │   │   ├── page.09381982203c1aff.hot-update.js
@@ -397,6 +400,7 @@ marsos-next
 │   │       │   ├── layout.23317d91afb370fa.hot-update.js
 │   │       │   ├── layout.27e5dedba57b2959.hot-update.js
 │   │       │   ├── layout.28613b5c03cdd39f.hot-update.js
+│   │       │   ├── layout.296a5f437e0359d1.hot-update.js
 │   │       │   ├── layout.2ae987b8c37560d2.hot-update.js
 │   │       │   ├── layout.2bb3a45bc279c983.hot-update.js
 │   │       │   ├── layout.2bf6fea1904eb0d2.hot-update.js
@@ -453,6 +457,7 @@ marsos-next
 │   │       │   ├── layout.7f57507528b7c5de.hot-update.js
 │   │       │   ├── layout.7feb8c1dd1ab46fd.hot-update.js
 │   │       │   ├── layout.8116857b87602def.hot-update.js
+│   │       │   ├── layout.81c2b565abc442cd.hot-update.js
 │   │       │   ├── layout.828262b77b3e033e.hot-update.js
 │   │       │   ├── layout.82e892499480bc96.hot-update.js
 │   │       │   ├── layout.83b77e85be5e0943.hot-update.js
@@ -468,6 +473,7 @@ marsos-next
 │   │       │   ├── layout.98bfacf2dd9d92c5.hot-update.js
 │   │       │   ├── layout.98c55a6bb4848d8e.hot-update.js
 │   │       │   ├── layout.9b71ba856443022f.hot-update.js
+│   │       │   ├── layout.9e20cda0ded2ac4c.hot-update.js
 │   │       │   ├── layout.a335df2fe89bd132.hot-update.js
 │   │       │   ├── layout.a4a5e555c955f669.hot-update.js
 │   │       │   ├── layout.a5c2b8506c501a82.hot-update.js
@@ -494,6 +500,7 @@ marsos-next
 │   │       │   ├── layout.c16a1109de6ae67e.hot-update.js
 │   │       │   ├── layout.c1dea42c2bbd527b.hot-update.js
 │   │       │   ├── layout.c3b46f6a2a2d9bab.hot-update.js
+│   │       │   ├── layout.c4cd1ba34faa9a47.hot-update.js
 │   │       │   ├── layout.c5171dacc9ef88df.hot-update.js
 │   │       │   ├── layout.c5c4da4f79edcd0f.hot-update.js
 │   │       │   ├── layout.c6ab0f8d6058a09c.hot-update.js
@@ -512,6 +519,7 @@ marsos-next
 │   │       │   ├── layout.e0423f7389484af8.hot-update.js
 │   │       │   ├── layout.e09c45fb9f164537.hot-update.js
 │   │       │   ├── layout.e1c4c60ff88605ec.hot-update.js
+│   │       │   ├── layout.e20e0b3b07e4efeb.hot-update.js
 │   │       │   ├── layout.e46c00bbb9556a97.hot-update.js
 │   │       │   ├── layout.e75a848c4f33dc75.hot-update.js
 │   │       │   ├── layout.e762c5261dcec212.hot-update.js
@@ -530,7 +538,8 @@ marsos-next
 │   │       │   ├── layout.fb20438dfdbf25bd.hot-update.js
 │   │       │   ├── layout.fdb143ae1e2090d3.hot-update.js
 │   │       │   ├── layout.ff4c3c9392346ea1.hot-update.js
-│   │       │   └── layout.ff6d0a5a38ca51f7.hot-update.js
+│   │       │   ├── layout.ff6d0a5a38ca51f7.hot-update.js
+│   │       │   └── page.81c2b565abc442cd.hot-update.js
 │   │       ├── 01bea12c49b62cfd.webpack.hot-update.json
 │   │       ├── 01fe5fd4168d3303.webpack.hot-update.json
 │   │       ├── 020c5d74beaee139.webpack.hot-update.json
@@ -556,6 +565,7 @@ marsos-next
 │   │       ├── 257a0eb3b508d5a6.webpack.hot-update.json
 │   │       ├── 27e5dedba57b2959.webpack.hot-update.json
 │   │       ├── 28613b5c03cdd39f.webpack.hot-update.json
+│   │       ├── 296a5f437e0359d1.webpack.hot-update.json
 │   │       ├── 2ae987b8c37560d2.webpack.hot-update.json
 │   │       ├── 2bb3a45bc279c983.webpack.hot-update.json
 │   │       ├── 2bf6fea1904eb0d2.webpack.hot-update.json
@@ -616,6 +626,7 @@ marsos-next
 │   │       ├── 7f57507528b7c5de.webpack.hot-update.json
 │   │       ├── 7feb8c1dd1ab46fd.webpack.hot-update.json
 │   │       ├── 8116857b87602def.webpack.hot-update.json
+│   │       ├── 81c2b565abc442cd.webpack.hot-update.json
 │   │       ├── 828262b77b3e033e.webpack.hot-update.json
 │   │       ├── 82e892499480bc96.webpack.hot-update.json
 │   │       ├── 83b77e85be5e0943.webpack.hot-update.json
@@ -633,6 +644,7 @@ marsos-next
 │   │       ├── 98c55a6bb4848d8e.webpack.hot-update.json
 │   │       ├── 9b71ba856443022f.webpack.hot-update.json
 │   │       ├── 9b8bb115761c3850.webpack.hot-update.json
+│   │       ├── 9e20cda0ded2ac4c.webpack.hot-update.json
 │   │       ├── a335df2fe89bd132.webpack.hot-update.json
 │   │       ├── a4a5e555c955f669.webpack.hot-update.json
 │   │       ├── a5c2b8506c501a82.webpack.hot-update.json
@@ -660,6 +672,7 @@ marsos-next
 │   │       ├── c16a1109de6ae67e.webpack.hot-update.json
 │   │       ├── c1dea42c2bbd527b.webpack.hot-update.json
 │   │       ├── c3b46f6a2a2d9bab.webpack.hot-update.json
+│   │       ├── c4cd1ba34faa9a47.webpack.hot-update.json
 │   │       ├── c5171dacc9ef88df.webpack.hot-update.json
 │   │       ├── c5c4da4f79edcd0f.webpack.hot-update.json
 │   │       ├── c6ab0f8d6058a09c.webpack.hot-update.json
@@ -679,6 +692,7 @@ marsos-next
 │   │       ├── e0423f7389484af8.webpack.hot-update.json
 │   │       ├── e09c45fb9f164537.webpack.hot-update.json
 │   │       ├── e1c4c60ff88605ec.webpack.hot-update.json
+│   │       ├── e20e0b3b07e4efeb.webpack.hot-update.json
 │   │       ├── e46c00bbb9556a97.webpack.hot-update.json
 │   │       ├── e75a848c4f33dc75.webpack.hot-update.json
 │   │       ├── e762c5261dcec212.webpack.hot-update.json
@@ -724,6 +738,7 @@ marsos-next
 │   │       ├── webpack.257a0eb3b508d5a6.hot-update.js
 │   │       ├── webpack.27e5dedba57b2959.hot-update.js
 │   │       ├── webpack.28613b5c03cdd39f.hot-update.js
+│   │       ├── webpack.296a5f437e0359d1.hot-update.js
 │   │       ├── webpack.2ae987b8c37560d2.hot-update.js
 │   │       ├── webpack.2bb3a45bc279c983.hot-update.js
 │   │       ├── webpack.2bf6fea1904eb0d2.hot-update.js
@@ -783,6 +798,7 @@ marsos-next
 │   │       ├── webpack.7f57507528b7c5de.hot-update.js
 │   │       ├── webpack.7feb8c1dd1ab46fd.hot-update.js
 │   │       ├── webpack.8116857b87602def.hot-update.js
+│   │       ├── webpack.81c2b565abc442cd.hot-update.js
 │   │       ├── webpack.828262b77b3e033e.hot-update.js
 │   │       ├── webpack.82e892499480bc96.hot-update.js
 │   │       ├── webpack.83b77e85be5e0943.hot-update.js
@@ -800,6 +816,7 @@ marsos-next
 │   │       ├── webpack.98c55a6bb4848d8e.hot-update.js
 │   │       ├── webpack.9b71ba856443022f.hot-update.js
 │   │       ├── webpack.9b8bb115761c3850.hot-update.js
+│   │       ├── webpack.9e20cda0ded2ac4c.hot-update.js
 │   │       ├── webpack.a335df2fe89bd132.hot-update.js
 │   │       ├── webpack.a4a5e555c955f669.hot-update.js
 │   │       ├── webpack.a5c2b8506c501a82.hot-update.js
@@ -827,6 +844,7 @@ marsos-next
 │   │       ├── webpack.c16a1109de6ae67e.hot-update.js
 │   │       ├── webpack.c1dea42c2bbd527b.hot-update.js
 │   │       ├── webpack.c3b46f6a2a2d9bab.hot-update.js
+│   │       ├── webpack.c4cd1ba34faa9a47.hot-update.js
 │   │       ├── webpack.c5171dacc9ef88df.hot-update.js
 │   │       ├── webpack.c5c4da4f79edcd0f.hot-update.js
 │   │       ├── webpack.c6ab0f8d6058a09c.hot-update.js
@@ -846,6 +864,7 @@ marsos-next
 │   │       ├── webpack.e0423f7389484af8.hot-update.js
 │   │       ├── webpack.e09c45fb9f164537.hot-update.js
 │   │       ├── webpack.e1c4c60ff88605ec.hot-update.js
+│   │       ├── webpack.e20e0b3b07e4efeb.hot-update.js
 │   │       ├── webpack.e46c00bbb9556a97.hot-update.js
 │   │       ├── webpack.e75a848c4f33dc75.hot-update.js
 │   │       ├── webpack.e762c5261dcec212.hot-update.js
@@ -913,7 +932,6 @@ marsos-next
 │   │   ├── PrivacyPolicy.js
 │   │   ├── ProductDetails.js
 │   │   ├── ReviewOrderModal.js
-│   │   ├── SecondaryNavbar.js
 │   │   ├── TermsAndConditions.js
 │   │   └── UserMessages.js
 │   ├── header
@@ -1072,5 +1090,4 @@ marsos-next
 ├── package-lock.json
 ├── package.json
 ├── postcss.config.mjs
-├── README.md
-└── structure.md
+└── README.md

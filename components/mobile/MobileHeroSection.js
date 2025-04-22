@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
 import { db } from "../../firebase/config";
 import { collection, getDocs } from "firebase/firestore";
@@ -5,8 +7,11 @@ import RfqModal from "../../pages/RfqPage";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+
 import "swiper/css";
 import "swiper/css/pagination";
+
 import firstBanner from "../../public/assets/banner.webp";
 
 import { Grid, MousePointer, Shield, Video } from "react-feather";
@@ -45,9 +50,7 @@ function MobileHeroSection() {
 
       productsSnapshot.forEach((doc) => {
         const product = doc.data();
-        if (product.category) {
-          categorySet.add(product.category);
-        }
+        if (product.category) categorySet.add(product.category);
       });
 
       setCategories(Array.from(categorySet));
@@ -84,14 +87,15 @@ function MobileHeroSection() {
         >
           {banners.map((banner, index) => (
             <SwiperSlide key={index}>
-              <div
-                className='h-full w-full relative'
-                style={{
-                  backgroundImage: `url(${banner.backgroundImage})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }}
-              >
+              <div className='h-full w-full relative'>
+                <Image
+                  src={banner.backgroundImage}
+                  alt={banner.title}
+                  fill
+                  priority
+                  className='object-cover'
+                  sizes='100vw'
+                />
                 <div className='absolute inset-0 bg-black/40' />
                 <div className='relative z-10 flex flex-col justify-center items-center text-white text-center h-full px-4'>
                   <h2 className='text-lg font-bold mb-2'>{banner.title}</h2>
@@ -159,7 +163,6 @@ function MobileHeroSection() {
           You May Like
         </h3>
 
-        {/* 🔄 Auto-scrolling horizontal section */}
         <div className='relative w-full overflow-hidden'>
           <div className='flex w-max animate-slide whitespace-nowrap gap-4'>
             {randomProducts.map((product) => (
@@ -168,12 +171,13 @@ function MobileHeroSection() {
                 className='min-w-[180px] bg-white border rounded shadow-sm p-3 flex-shrink-0'
               >
                 <div className='flex items-center gap-3'>
-                  <div className='w-12 h-12 bg-gray-100 rounded-full overflow-hidden'>
+                  <div className='w-12 h-12 bg-gray-100 rounded-full overflow-hidden relative'>
                     {product.mainImageUrl ? (
-                      <img
+                      <Image
                         src={product.mainImageUrl}
                         alt={product.productName || "Product"}
-                        className='w-full h-full object-cover'
+                        fill
+                        className='object-cover rounded-full'
                       />
                     ) : (
                       <div className='w-full h-full bg-gray-300'></div>
@@ -191,7 +195,6 @@ function MobileHeroSection() {
           </div>
         </div>
 
-        {/* 📦 CTA Button */}
         <button
           onClick={() => setShowRFQModal(true)}
           className='mt-4 w-full border border-[#2c6449] text-[#2c6449] text-sm py-2 rounded hover:bg-[#2c6449] hover:text-white transition'
@@ -204,5 +207,7 @@ function MobileHeroSection() {
     </section>
   );
 }
+
+MobileHeroSection.displayName = "MobileHeroSection"; // Optional, for ESLint/react
 
 export default MobileHeroSection;
