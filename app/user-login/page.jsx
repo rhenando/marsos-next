@@ -135,29 +135,36 @@ export default function UserLogin() {
   };
 
   return (
-    <div className='flex min-h-screen'>
+    <div className='flex min-h-screen lg:-mt-[50px]'>
       <ToastContainer position='top-right' autoClose={3000} />
-      {/* Invisible reCAPTCHA mounts here */}
       <div id='recaptcha-container' />
 
-      {/* Left panel on large screens */}
-      <div className='hidden lg:flex w-1/2 bg-[#2c6449] text-white items-center justify-center p-10'>
-        <h1 className='text-4xl font-bold'>Welcome to Marsos</h1>
+      {/* LEFT PANEL */}
+      <div className='hidden lg:flex w-1/2 bg-gradient-to-br from-[#2c6449] to-green-400 text-white flex-col items-center justify-center p-10'>
+        <img src='/logo-marsos.svg' alt='Marsos Logo' className='w-28 mb-4' />
+        <h1 className='text-4xl font-bold mb-4'>Welcome to Marsos</h1>
+        <p className='text-lg max-w-sm text-center opacity-80'>
+          Trust made visible. Trade made simple.
+        </p>
       </div>
 
-      {/* Right/login panel */}
-      <div className='flex w-full lg:w-1/2 items-center justify-center bg-gray-50 p-8'>
-        <div className='w-full max-w-md bg-white p-6 rounded shadow'>
+      {/* Right Panel: Login/Register Card */}
+      <div className='flex w-full lg:w-1/2 justify-center items-center bg-gray-50'>
+        <div className='w-full max-w-md bg-white p-8 rounded-lg shadow-lg'>
           {step === "enter-phone" ? (
             <>
-              <h2 className='text-2xl font-semibold mb-6 text-center'>
-                Phone Login
+              <h2 className='text-2xl font-semibold mb-2 text-center text-[#2c6449]'>
+                Login or Register
               </h2>
+              <p className='text-sm text-gray-600 text-center mb-6'>
+                Secure sign-in with your phone
+              </p>
+
               <div className='flex mb-4'>
                 <select
                   value={countryCode}
                   onChange={(e) => setCountryCode(e.target.value)}
-                  className='border p-2 rounded-l'
+                  className='border p-2 rounded-l w-24'
                 >
                   <option value='+966'>+966</option>
                   <option value='+971'>+971</option>
@@ -167,27 +174,44 @@ export default function UserLogin() {
                   type='tel'
                   value={phone}
                   onChange={handlePhoneChange}
-                  placeholder='Phone number'
+                  placeholder='Enter phone number'
                   className='flex-1 border p-2 rounded-r focus:outline-none'
                 />
               </div>
+
+              <div className='mb-4 text-sm text-gray-600'>
+                <label className='flex items-center space-x-2'>
+                  <input type='checkbox' className='border-gray-300' />
+                  <span>
+                    I agree to the{" "}
+                    <a href='/terms' className='underline'>
+                      Terms & Conditions
+                    </a>{" "}
+                    and{" "}
+                    <a href='/privacy' className='underline'>
+                      Privacy Policy
+                    </a>
+                  </span>
+                </label>
+              </div>
+
               <button
                 onClick={sendOtp}
                 disabled={!isPhoneValid || loading}
-                className='w-full bg-[#2c6449] text-white py-2 rounded flex items-center justify-center gap-2 disabled:opacity-50'
+                className='w-full bg-[#88a896] text-white py-2 rounded font-semibold flex items-center justify-center gap-2 disabled:opacity-60'
               >
                 {loading ? (
                   <>
                     <Loader className='animate-spin' /> Sending…
                   </>
                 ) : (
-                  "Send OTP"
+                  "Send code via SMS"
                 )}
               </button>
             </>
           ) : (
             <>
-              <h2 className='text-2xl font-semibold mb-6 text-center'>
+              <h2 className='text-2xl font-semibold mb-6 text-center text-[#2c6449]'>
                 Enter OTP
               </h2>
               <OtpInputGroup onChange={(v) => setOtp(v)} />

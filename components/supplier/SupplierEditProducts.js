@@ -1,6 +1,8 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { getDocuments, updateDocument } from "../../utils/firestore";
+import { useRouter, useParams } from "next/navigation";
+import { getDocuments, updateDocument } from "@/utils/firestore";
 import {
   getStorage,
   ref,
@@ -9,14 +11,16 @@ import {
 } from "firebase/storage";
 import Select from "react-select";
 import CreatableSelect from "react-select/creatable";
-import { showSuccess, showError } from "../../utils/toastUtils";
-import { useAuth } from "../../context/AuthContext";
+import { showSuccess, showError } from "@/utils/toastUtils";
+import { useAuth } from "@/context/AuthContext";
 import { useTranslation } from "react-i18next";
 
 const AdminEditProducts = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { currentUser } = useAuth();
-  const { productId } = useParams();
+  const params = useParams();
+  const productId = params.productId;
+
   const [product, setProduct] = useState(null);
   const [originalProduct, setOriginalProduct] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
@@ -100,13 +104,10 @@ const AdminEditProducts = () => {
           const category = product.category || "Uncategorized";
           const subCategory = product.subCategory || "Uncategorized";
 
-          if (!categoryData[category]) {
-            categoryData[category] = new Set();
-          }
+          if (!categoryData[category]) categoryData[category] = new Set();
           categoryData[category].add(subCategory);
         });
 
-        // Convert sets to arrays and ensure proper formatting
         const formattedCategories = Object.keys(categoryData).map((cat) => ({
           value: cat,
           label: cat,
@@ -116,28 +117,16 @@ const AdminEditProducts = () => {
         Object.entries(categoryData).forEach(([category, subCategories]) => {
           formattedSubCategoriesMap[category] = Array.from(subCategories).map(
             (sub) => ({
-              value: sub, // Ensure correct formatting
+              value: sub,
               label: sub,
             })
           );
         });
 
-        setSubCategoriesMap(formattedSubCategoriesMap);
-
-        Object.entries(categoryData).forEach(([category, subCategories]) => {
-          formattedSubCategoriesMap[category] = [
-            ...Array.from(subCategories).map((sub) => ({
-              value: sub,
-              label: sub,
-            })),
-            { value: "Others", label: "Others" },
-          ];
-        });
-
         setCategories(formattedCategories);
         setSubCategoriesMap(formattedSubCategoriesMap);
       } catch (error) {
-        console.error("Error fetching categories and subcategories:", error);
+        console.error("Error fetching categories:", error);
       }
     };
 
@@ -155,58 +144,16 @@ const AdminEditProducts = () => {
         );
 
         if (foundProduct) {
-          // Format sizes and colors
-          const formattedSizes =
-            foundProduct.sizes?.map((size) => ({ value: size, label: size })) ||
-            [];
-          const formattedColors =
-            foundProduct.colors?.map((color) => ({
-              value: color,
-              label: color,
-            })) || [];
-
-          // Format price ranges with nested locations
-          const priceRanges = foundProduct.priceRanges?.map((range) => ({
-            ...range,
-            minQty: { value: range.minQty, label: range.minQty },
-            maxQty: { value: range.maxQty, label: range.maxQty },
-            price: range.price || 0,
-            locations: range.locations?.map((loc) => ({
-              value: loc.location,
-              label: loc.location,
-              locationPrice: loc.locationPrice,
-            })),
-          }));
-
-          // Update the state with product and subcategories
-          setProduct({
-            ...foundProduct,
-            sizes: formattedSizes,
-            colors: formattedColors,
-            priceRanges,
-          });
-
-          setOriginalProduct({
-            ...foundProduct,
-            sizes: formattedSizes,
-            colors: formattedColors,
-            priceRanges,
-          });
-
-          // Update sub-category options if category exists
+          setProduct(foundProduct);
+          setOriginalProduct(foundProduct);
           if (foundProduct.category) {
-            const subCatOptions = subCategoriesMap[foundProduct.category]?.map(
-              (subCat) => ({
-                value: subCat.value || subCat, // Ensure compatibility with format
-                label: subCat.label || subCat,
-              })
+            setSubCategoryOptions(
+              subCategoriesMap[foundProduct.category] || []
             );
-
-            setSubCategoryOptions(subCatOptions || []);
           }
         } else {
           showError("Product not found!");
-          navigate("/supplier-dashboard");
+          router.push("/supplier-dashboard");
         }
       } catch (error) {
         console.error("Error fetching product:", error);
@@ -214,7 +161,7 @@ const AdminEditProducts = () => {
     };
 
     fetchProduct();
-  }, [productId, subCategoriesMap, currentUser?.uid, navigate]);
+  }, [productId, subCategoriesMap, currentUser?.uid, router]);
 
   const uploadImageToStorage = async (file, path) => {
     const fileRef = ref(storage, `${path}/${file.name}`);
@@ -273,159 +220,17 @@ const AdminEditProducts = () => {
   };
 
   const handleSave = async () => {
-    if (!product) return;
-
-    const updatedProduct = {
-      ...product,
-      sizes: product.sizes?.map((size) => size.value) || [],
-      colors: product.colors?.map((color) => color.value) || [],
-      priceRanges:
-        product.priceRanges?.map((range) => ({
-          minQty: range.minQty?.value || "",
-          maxQty: range.maxQty?.value || "",
-          price: range.price || 0,
-          locations:
-            range.locations?.map((loc) => ({
-              location: loc.value,
-              locationPrice: loc.locationPrice,
-            })) || [],
-        })) || [],
-    };
-
     try {
-      await updateDocument("products", product.id, updatedProduct);
+      await updateDocument("products", product.id, product);
       showSuccess("Product updated successfully!");
-      // Delay redirection to allow the notification to be read
       setTimeout(() => {
-        navigate("/supplier-dashboard");
-      }, 3000); // 3 seconds delay
+        router.push("/supplier-dashboard");
+      }, 3000);
     } catch (error) {
       console.error("Error saving product:", error);
-      showError(
-        "Error",
-        "An error occurred while saving the product. Please try again."
-      );
+      showError("An error occurred while saving the product.");
     }
   };
-
-  const handleChange = (field, value) => {
-    setProduct((prev) => {
-      if (field === "productName" || field === "description") {
-        const existing = prev[field];
-        return {
-          ...prev,
-          [field]:
-            typeof existing === "object"
-              ? { ...existing, en: value }
-              : { en: value },
-        };
-      }
-
-      return {
-        ...prev,
-        [field]: value,
-      };
-    });
-  };
-
-  const handleCategoryChange = (selectedOption) => {
-    const category = selectedOption.value;
-    handleChange("category", category);
-    setSubCategoryOptions(subCategoriesMap[category] || []);
-    handleChange("subCategory", ""); // Reset subcategory when category changes
-  };
-
-  const handleSubCategoryChange = (selectedOption) => {
-    if (selectedOption.value === "Others") {
-      handleChange("subCategory", selectedOption?.value || "");
-    } else {
-      handleChange("subCategory", selectedOption.value);
-    }
-  };
-
-  const handleAddPriceRange = () => {
-    const newRange = { minQty: "", maxQty: "", price: 0, locations: [] };
-    setProduct((prev) => ({
-      ...prev,
-      priceRanges: [...(prev.priceRanges || []), newRange],
-    }));
-  };
-
-  const handleRemovePriceRange = (index) => {
-    const updatedRanges = product.priceRanges.filter((_, i) => i !== index);
-    setProduct((prev) => ({
-      ...prev,
-      priceRanges: updatedRanges,
-    }));
-  };
-
-  const handlePriceRangeChange = (index, field, value) => {
-    const updatedRanges = [...product.priceRanges];
-    updatedRanges[index][field] = value;
-    setProduct((prev) => ({
-      ...prev,
-      priceRanges: updatedRanges,
-    }));
-  };
-
-  const handleLocationChange = (index, locIndex, field, value) => {
-    const updatedRanges = [...product.priceRanges];
-    const location = updatedRanges[index].locations[locIndex] || {};
-
-    updatedRanges[index].locations[locIndex] = {
-      ...location,
-      [field]: field === "value" ? value.value : value, // Update value or locationPrice
-      label: field === "value" ? value.label : location.label, // Ensure label is set when changing value
-    };
-
-    setProduct((prev) => ({
-      ...prev,
-      priceRanges: updatedRanges,
-    }));
-  };
-
-  const handleAddLocation = (index) => {
-    const updatedRanges = [...product.priceRanges];
-    updatedRanges[index].locations.push({
-      value: "",
-      label: "",
-      locationPrice: 0,
-    });
-    setProduct((prev) => ({
-      ...prev,
-      priceRanges: updatedRanges,
-    }));
-  };
-
-  const handleRemoveLocation = (index, locIndex) => {
-    const updatedRanges = [...product.priceRanges];
-    updatedRanges[index].locations.splice(locIndex, 1);
-    setProduct((prev) => ({
-      ...prev,
-      priceRanges: updatedRanges,
-    }));
-  };
-
-  const isOriginalValue = (field, value, index = null, locIndex = null) => {
-    if (!originalProduct) return false; // Ensure originalProduct exists
-    if (field === "locations") {
-      // Check locations inside a price range
-      const originalLocation =
-        originalProduct.priceRanges?.[index]?.locations?.[locIndex];
-      return (
-        originalLocation?.value === value.value &&
-        originalLocation?.locationPrice === value.locationPrice
-      );
-    }
-    if (["minQty", "maxQty", "price"].includes(field)) {
-      // Check price range fields
-      const originalRange = originalProduct.priceRanges?.[index];
-      return originalRange?.[field]?.value === value?.value;
-    }
-    return originalProduct[field] === value; // Default check for non-nested fields
-  };
-
-  const isValidNumberInput = (value) => /^[0-9]*\.?[0-9]+$/.test(value);
 
   if (!product) return <p>Loading product details...</p>;
 
@@ -929,28 +734,19 @@ const AdminEditProducts = () => {
           Add Price Range
         </button>
       </div>
-
-      {/* Save and Cancel Buttons */}
-      <div className='form-group mt-4'>
-        <button
-          className='btn'
-          style={{
-            backgroundColor: "#2c6449",
-            color: "white",
-            borderColor: "#2c6449",
-          }}
-          onClick={isUploading ? null : handleSave}
-          disabled={isUploading}
-        >
-          {isUploading ? "Uploading..." : "Save Changes"}
-        </button>
-        <button
-          className='btn btn-secondary ms-2'
-          onClick={() => navigate("/supplier-dashboard")}
-        >
-          Cancel
-        </button>
-      </div>
+      <button
+        className='btn btn-success'
+        disabled={isUploading}
+        onClick={handleSave}
+      >
+        {isUploading ? "Uploading..." : "Save Changes"}
+      </button>
+      <button
+        className='btn btn-secondary ms-2'
+        onClick={() => router.push("/supplier-dashboard")}
+      >
+        Cancel
+      </button>
     </div>
   );
 };

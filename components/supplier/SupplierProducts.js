@@ -87,15 +87,15 @@ export default function Products() {
   }
 
   return (
-    <div className='container-fluid py-3'>
+    <div className='py-3 px-4 w-full'>
       {/* Header */}
       <div className='mb-2'>
-        <h4 className='text-success fw-bold'>{t("products.title")}</h4>
-        <p className='text-muted small'>{t("products.subtitle")}</p>
+        <h4 className='text-green-700 font-bold'>{t("products.title")}</h4>
+        <p className='text-gray-500 text-sm'>{t("products.subtitle")}</p>
       </div>
 
       {/* Tabs */}
-      <div className='mb-2 d-flex align-items-center'>
+      <div className='mb-2 flex items-center'>
         {categories.map((cat) => (
           <button
             key={cat}
@@ -103,12 +103,12 @@ export default function Products() {
               setSelectedTab(cat);
               setCurrentPage(1);
             }}
-            className={`btn btn-link text-decoration-none me-2 small ${
-              selectedTab === cat ? "text-success fw-bold" : "text-muted"
+            className={`mr-2 text-sm ${
+              selectedTab === cat ? "text-green-700 font-bold" : "text-gray-500"
             }`}
           >
-            {cat}{" "}
-            <span className='badge bg-light text-dark ms-1 small'>
+            {cat}
+            <span className='bg-gray-100 text-gray-800 ml-1 px-1.5 py-0.5 rounded text-xs'>
               {cat === "All"
                 ? productData.length
                 : productData.filter((p) => p.category === cat).length}
@@ -118,40 +118,36 @@ export default function Products() {
       </div>
 
       {/* Filters */}
-      <div className='d-flex align-items-center mb-2 small'>
-        <select
-          className='form-select form-select-sm me-2'
-          style={{ maxWidth: 150 }}
-        >
+      <div className='flex items-center mb-2 text-sm'>
+        <select className='border border-gray-300 rounded px-2 py-1 mr-2 max-w-[150px]'>
           <option value='manual'>{t("products.location")}</option>
           <option value='price'>{t("products.price")}</option>
           <option value='quantity'>{t("products.quantity")}</option>
         </select>
-        <button className='btn btn-outline-primary btn-sm me-2'>
+        <button className='border border-blue-500 text-blue-500 rounded px-2 py-1 mr-2'>
           {t("products.filter")}
         </button>
         <input
           type='text'
-          className='form-control form-control-sm me-2'
+          className='border border-gray-300 rounded px-2 py-1 mr-2 max-w-[300px]'
           placeholder={t("products.searchPlaceholder")}
-          style={{ maxWidth: 300 }}
         />
-        <button className='btn btn-primary btn-sm'>
+        <button className='bg-blue-500 text-white rounded px-2 py-1'>
           {t("products.search")}
         </button>
       </div>
 
       {/* Actions */}
-      <div className='d-flex align-items-center justify-content-between mb-2 small'>
-        <button className='btn btn-outline-primary btn-sm'>
+      <div className='flex items-center justify-between mb-2 text-sm'>
+        <button className='border border-blue-500 text-blue-500 rounded px-2 py-1'>
           {t("products.export")}
         </button>
         <div>
-          <button className='btn btn-outline-secondary btn-sm me-2'>
+          <button className='border border-gray-400 text-gray-600 rounded px-2 py-1 mr-2'>
             {t("products.options")}
           </button>
           <button
-            className='btn btn-success btn-sm'
+            className='bg-green-700 text-white rounded px-2 py-1'
             onClick={() => router.push("/supplier-add-products")}
           >
             {t("products.addNew")}
@@ -160,30 +156,30 @@ export default function Products() {
       </div>
 
       {/* Table */}
-      <div className='table-responsive'>
-        <table className='table table-striped table-hover table-sm'>
-          <thead className='table-light small'>
+      <div className='overflow-x-auto'>
+        <table className='w-full table-auto text-sm'>
+          <thead className='bg-gray-100'>
             <tr>
-              <th>
+              <th className='p-2'>
                 <input type='checkbox' />
               </th>
-              <th>{t("products.product")}</th>
-              <th>{t("products.name")}</th>
-              <th>{t("products.supplierName")}</th>
-              <th>{t("products.location")}</th>
-              <th>{t("products.qtyPricing")}</th>
-              <th>{t("products.size")}</th>
-              <th>{t("products.color")}</th>
-              <th>{t("products.actions")}</th>
+              <th className='p-2'>{t("products.product")}</th>
+              <th className='p-2'>{t("products.name")}</th>
+              <th className='p-2'>{t("products.supplierName")}</th>
+              <th className='p-2'>{t("products.location")}</th>
+              <th className='p-2'>{t("products.qtyPricing")}</th>
+              <th className='p-2'>{t("products.size")}</th>
+              <th className='p-2'>{t("products.color")}</th>
+              <th className='p-2'>{t("products.actions")}</th>
             </tr>
           </thead>
           <tbody>
             {pageItems.map((p) => (
-              <tr key={p.id}>
-                <td>
+              <tr key={p.id} className='border-b hover:bg-gray-50'>
+                <td className='p-2'>
                   <input type='checkbox' />
                 </td>
-                <td>
+                <td className='p-2'>
                   <img
                     src={p.mainImageUrl || "https://via.placeholder.com/50"}
                     alt={
@@ -191,20 +187,19 @@ export default function Products() {
                         ? p.productName[currentLang]
                         : p.productName
                     }
-                    className='img-fluid rounded'
-                    style={{ width: 40, height: 40 }}
+                    className='rounded w-10 h-10 object-cover'
                   />
                 </td>
-                <td className='small'>
+                <td className='p-2'>
                   {typeof p.productName === "object"
                     ? p.productName[currentLang] || p.productName.en
                     : p.productName}
                 </td>
-                <td className='small'>{p.supplierName || "N/A"}</td>
-                <td className='small'>{p.mainLocation || "N/A"}</td>
-                <td className='small'>
+                <td className='p-2'>{p.supplierName || "N/A"}</td>
+                <td className='p-2'>{p.mainLocation || "N/A"}</td>
+                <td className='p-2'>
                   {p.priceRanges?.length ? (
-                    <ul className='mb-0 ps-0'>
+                    <ul className='list-none'>
                       {p.priceRanges.map((r, i) => (
                         <li key={i}>
                           {t("products.min")}: {r.minQty}, {t("products.max")}:{" "}
@@ -216,16 +211,15 @@ export default function Products() {
                     "N/A"
                   )}
                 </td>
-                <td className='small'>
+                <td className='p-2'>
                   {p.sizes?.length ? p.sizes.join(", ") : "N/A"}
                 </td>
-                <td className='small'>
+                <td className='p-2'>
                   {p.colors?.length ? p.colors.join(", ") : "N/A"}
                 </td>
-                <td>
+                <td className='p-2 space-x-2'>
                   <button
-                    className='text-primary border-0 bg-transparent p-0 me-2'
-                    style={{ fontSize: "0.85rem" }}
+                    className='text-blue-500'
                     onClick={() =>
                       router.push(`/supplier-edit-products/${p.id}`)
                     }
@@ -233,8 +227,7 @@ export default function Products() {
                     {t("products.edit")}
                   </button>
                   <button
-                    className='text-danger border-0 bg-transparent p-0'
-                    style={{ fontSize: "0.85rem" }}
+                    className='text-red-500'
                     onClick={() => handleDelete(p.id)}
                   >
                     {t("products.remove")}
@@ -247,19 +240,19 @@ export default function Products() {
       </div>
 
       {/* Pagination */}
-      <div className='d-flex justify-content-between align-items-center mt-3'>
+      <div className='flex justify-between items-center mt-3'>
         <button
-          className='btn btn-outline-secondary btn-sm'
+          className='border border-gray-400 text-gray-600 rounded px-2 py-1 text-sm'
           onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
           disabled={currentPage === 1}
         >
           {t("products.previous")}
         </button>
-        <span className='text-muted small'>
+        <span className='text-gray-500 text-sm'>
           {t("products.page")} {currentPage} {t("products.of")} {totalPages}
         </span>
         <button
-          className='btn btn-outline-secondary btn-sm'
+          className='border border-gray-400 text-gray-600 rounded px-2 py-1 text-sm'
           onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
           disabled={currentPage === totalPages}
         >
